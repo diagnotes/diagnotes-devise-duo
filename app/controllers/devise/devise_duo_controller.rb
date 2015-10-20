@@ -5,9 +5,12 @@ class Devise::DeviseDuoController < DeviseController
   ]
   prepend_before_filter :authenticate_scope!, :only => [
     :GET_enable_duo, :POST_enable_duo,
-    :GET_verify_duo_installation, :POST_verify_duo_installation,
+    :GET_verify_duo_installation,
     :POST_disable_duo
   ]
+
+  skip_before_filter :verify_authenticity_token, only: :POST_verify_duo
+
   include Devise::Controllers::Helpers
 
   def GET_verify_duo
@@ -32,6 +35,7 @@ class Devise::DeviseDuoController < DeviseController
       sign_in(resource_name, @resource)
 
       set_flash_message(:notice, :signed_in) if is_navigational_format?
+
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
       handle_invalid_token :verify_duo, :invalid_token
@@ -62,15 +66,6 @@ class Devise::DeviseDuoController < DeviseController
 
   def GET_verify_duo_installation
     render :verify_duo_installation
-  end
-
-  def POST_verify_duo_installation
-    if !self.resource.duo_enabled
-      handle_invalid_token :verify_duo_installation, :not_enabled
-    else
-      set_flash_message(:notice, :enabled)
-      redirect_to after_duo_verified_path_for(resource)
-    end
   end
 
   private

@@ -39,11 +39,6 @@ def fill_verify_token_form(token)
   click_on 'Check Token'
 end
 
-def fill_in_verify_duo_installation_form(token)
-  fill_in 'duo-token', with: token
-  click_on 'Enable my account'
-end
-
 def sign_cookie(name, val)
   verifier = ActiveSupport::MessageVerifier.new(RailsApp::Application.config.secret_token)
   verifier.generate(val)

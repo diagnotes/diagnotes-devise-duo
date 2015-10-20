@@ -107,12 +107,6 @@ module DeviseDuo
 
   mattr_accessor :integration_key, :secret_key, :api_hostname, :application_secret_key
 
-  class Engine < ::Rails::Engine
-    initializer "devise_duo.assets.precompile" do |app|
-      app.config.assets.precompile += %w(Duo-Web-v1.bundled.js Duo-Web-v1.js)
-		end
-	end
-
   module Controllers
     autoload :Passwords, 'devise_duo/controllers/passwords'
     autoload :Helpers, 'devise_duo/controllers/helpers'

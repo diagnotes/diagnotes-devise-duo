@@ -23,8 +23,5 @@ describe "generators for devise_duo" do
     @output.include?('config/locales/devise.duo.en.yml').should be_true
     @output.include?('app/views/devise/devise_duo/enable_duo.html.erb').should be_true
     @output.include?('app/views/devise/devise_duo/verify_duo.html.erb').should be_true
-    @output.include?('app/views/devise/devise_duo/verify_duo_installation.html.erb').should be_true
-    @output.include?('app/assets/stylesheets/devise_duo.css').should be_true
-    @output.include?('app/assets/javascripts/devise_duo.js').should be_true
   end
 end

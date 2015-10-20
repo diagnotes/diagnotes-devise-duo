@@ -4,9 +4,6 @@ en:
     submit_token_title: "Please enter your Duo token:"
     duo_register_title: 'Enable Two factor authentication'
     enable_duo: 'Enable'
-    cellphone: 'Enter your cellphone'
-    country: 'Enter you country'
-    request_sms: 'Request SMS'
     remember_device: 'Remember Device'
 
     duo_verify_installation_title: "Verify your account"

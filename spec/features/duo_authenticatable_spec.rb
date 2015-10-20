@@ -21,7 +21,7 @@ describe "Duo Autnenticatable", :type => :request do
 
   describe "If user have two factor authentication" do
     before :each do
-      @user = create_user(:duo_id => 1)
+      @user = create_user
       @user.update_attribute(:duo_enabled, true)
     end
 

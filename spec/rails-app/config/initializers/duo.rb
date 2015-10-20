@@ -1,2 +1,6 @@
-Duo.api_key = 'bf12974d70818a08199d17d5e2bae630'
-Duo.api_uri = 'http://sandbox-api.authy.com/'
+# get these from the duo portal
+DeviseDuo.integration_key = '12345'
+DeviseDuo.secret_key = '12345'
+DeviseDuo.api_hostname = 'duosecurity.com'
+# generate this with rake secret
+DeviseDuo.application_secret_key = '12345'

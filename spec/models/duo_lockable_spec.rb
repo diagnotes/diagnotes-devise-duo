@@ -4,7 +4,7 @@ describe Devise::Models::DuoLockable do
 
   context 'model includes Devise::Models::Lockable' do
 
-    let(:user) { create_lockable_user duo_id: '20' }
+    let(:user) { create_lockable_user }
 
     context '#lockable?' do
 
@@ -55,7 +55,7 @@ describe Devise::Models::DuoLockable do
   context 'model misconfigured, includes DuoLockable w/out Lockable' do
 
     let(:user) do
-      u = create_user duo_id: '20'
+      u = create_user
       u.extend Devise::Models::DuoLockable
       u
     end

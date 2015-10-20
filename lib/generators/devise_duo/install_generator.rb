@@ -17,11 +17,9 @@ module DeviseDuo
         if options.haml?
           copy_file '../../../app/views/devise/enable_duo.html.haml', 'app/views/devise/devise_duo/enable_duo.html.haml'
           copy_file '../../../app/views/devise/verify_duo.html.haml', 'app/views/devise/devise_duo/verify_duo.html.haml'
-          copy_file '../../../app/views/devise/verify_duo_installation.html.haml', 'app/views/devise/devise_duo/verify_duo_installation.html.haml'
         else
           copy_file '../../../app/views/devise/enable_duo.html.erb', 'app/views/devise/devise_duo/enable_duo.html.erb'
           copy_file '../../../app/views/devise/verify_duo.html.erb', 'app/views/devise/devise_duo/verify_duo.html.erb'
-          copy_file '../../../app/views/devise/verify_duo_installation.html.erb', 'app/views/devise/devise_duo/verify_duo_installation.html.erb'
         end
       end
 

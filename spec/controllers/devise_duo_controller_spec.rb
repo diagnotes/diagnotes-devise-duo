@@ -5,7 +5,7 @@ describe Devise::DeviseDuoController do
 
   before :each do
     request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = create_user(:duo_id => 1)
+    @user = create_user
   end
 
   describe "GET #verify_duo" do
@@ -65,7 +65,7 @@ describe Devise::DeviseDuoController do
 
     context 'User is lockable' do
 
-      let(:user) { create_lockable_user duo_id: 2 }
+      let(:user) { create_lockable_user }
 
       before do
         controller.stub(:find_resource).and_return user
@@ -139,7 +139,7 @@ describe Devise::DeviseDuoController do
 
       post :POST_enable_duo, :cellphone => '2222227', :country_code => '57'
       user2.reload
-      user2.duo_id.should_not be_nil
+      user2.duo_enabled.should_not be_nil
       flash.now[:notice].should == "Two factor authentication was enabled"
       response.should redirect_to(user_verify_duo_installation_url)
     end
@@ -166,7 +166,6 @@ describe Devise::DeviseDuoController do
 
       post :POST_disable_duo
       @user.reload
-      @user.duo_id.should be_nil
       @user.duo_enabled.should be_false
       flash.now[:notice].should == "Two factor authentication was disabled"
       response.should redirect_to(root_url)
@@ -178,11 +177,9 @@ describe Devise::DeviseDuoController do
 
       duo_response = mock('duo_response')
       duo_response.stub(:ok?).and_return(false)
-      Duo::API.should_receive(:delete_user).with(:id => @user.duo_id.to_s).and_return(duo_response)
 
       post :POST_disable_duo
       @user.reload
-      @user.duo_id.should_not be_nil
       @user.duo_enabled.should be_true
       flash[:error].should == "Something went wrong while disabling two factor authentication"
     end
@@ -190,59 +187,6 @@ describe Devise::DeviseDuoController do
     it "Should redirect if user isn't authenticated" do
       post :POST_disable_duo
       response.should redirect_to(new_user_session_url)
-    end
-  end
-
-  describe "GET #verify_duo_installation" do
-    it "Should render the duo installation page" do
-      sign_in @user
-      get :GET_verify_duo_installation
-      response.should render_template('verify_duo_installation')
-    end
-
-    it "Should redirect if user isn't authenticated" do
-      get :GET_verify_duo_installation
-      response.should redirect_to(new_user_session_url)
-    end
-  end
-
-  describe "POST #verify_duo_installation" do
-    it "Should enable duo for user" do
-      sign_in @user
-      post :POST_verify_duo_installation, :token => "0000000"
-      response.should redirect_to(root_url)
-      flash[:notice].should == 'Two factor authentication was enabled'
-    end
-
-    it "should not enable duo for user" do
-      sign_in @user
-      post :POST_verify_duo_installation, :token => "0007777"
-      response.should render_template('verify_duo_installation')
-      flash[:error].should == 'Something went wrong while enabling two factor authentication'
-    end
-
-    it "Should redirect if user isn't authenticated" do
-      get :GET_verify_duo_installation
-      response.should redirect_to(new_user_session_url)
-    end
-  end
-
-  describe "POST #request_sms" do
-    it "Should send sms if user is logged" do
-      sign_in @user
-      post :request_sms
-      response.content_type.should == 'application/json'
-      body = JSON.parse(response.body)
-      body['sent'].should be_true
-      body['message'].should == "SMS token was sent"
-    end
-
-    it "Shoul not send sms if user couldn't be found" do
-      post :request_sms
-      response.content_type.should == 'application/json'
-      body = JSON.parse(response.body)
-      body['sent'].should be_false
-      body['message'].should == "User couldn't be found."
     end
   end
 end

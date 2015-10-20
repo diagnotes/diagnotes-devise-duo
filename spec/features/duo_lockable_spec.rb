@@ -5,7 +5,7 @@ feature 'Duo Lockable' do
   context 'during verify code when Duo enabled' do
 
     let(:user) do
-      u = create_lockable_user duo_id: 20, email: 'foo@bar.com'
+      u = create_lockable_user email: 'foo@bar.com'
       u.update_attribute :duo_enabled, true
       u
     end

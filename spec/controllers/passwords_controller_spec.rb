@@ -11,7 +11,7 @@ describe DeviseDuo::PasswordsController do
 
     describe "Reset password" do
       it "Should redirect to verify token view" do
-        user = create_user(:duo_id => 1)
+        user = create_user
         user.reset_password_token = User.reset_password_token
         user.reset_password_sent_at = Time.now.utc
         user.duo_enabled = true
