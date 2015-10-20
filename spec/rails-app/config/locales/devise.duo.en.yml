@@ -1,0 +1,19 @@
+en:
+  devise:
+    submit_token: "Check Token"
+    submit_token_title: "Please enter your Duo token:"
+    duo_register_title: 'Enable Two factor authentication'
+    enable_duo: 'Enable'
+    cellphone: 'Enter your cellphone'
+    country: 'Enter you country'
+    request_sms: 'Request SMS'
+
+    duo_verify_installation_title: "Verify your account"
+    enable_my_account: 'Enable my account'
+
+    devise_duo:
+      user:
+        enabled: 'Two factor authentication was enabled'
+        not_enabled: 'Something went wrong while enabling two factor authentication'
+        signed_in: 'Signed in with Duo successfully.'
+        invalid_token: 'The entered token is invalid'

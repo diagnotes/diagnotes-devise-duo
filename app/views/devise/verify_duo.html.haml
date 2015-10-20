@@ -1,0 +1,12 @@
+=javascript_include_tag "devise_duo.js"
+/ or if jquery is already loaded
+/=javascript_include_tag "Duo-Web-v1.js"
+
+%script
+  Duo.init({
+    'host': '<%= DeviseDuo.api_hostname %>',
+    'sig_request': '<%= @sig_request %>',
+    'post_action': '<%= send("#{resource_name}_verify_duo_path") %>'
+  });
+
+%iframe id="duo_iframe" width="500" height="330" frameborder="0"
