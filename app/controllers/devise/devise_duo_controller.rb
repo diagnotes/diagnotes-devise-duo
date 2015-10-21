@@ -20,22 +20,15 @@ class Devise::DeviseDuoController < DeviseController
 
   # verify 2fa
   def POST_verify_duo
-
     authenticated_username = Duo::verify_response(DeviseDuo.integration_key, DeviseDuo.secret_key, DeviseDuo.application_secret_key, params[:sig_response])
-
     if authenticated_username
-
       @resource.update_attribute(:last_sign_in_with_duo, DateTime.now)
-
       remember_device if params[:remember_device].to_i == 1
       if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
         @resource.remember_me = true
       end
-
       sign_in(resource_name, @resource)
-
       set_flash_message(:notice, :signed_in) if is_navigational_format?
-
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
       handle_invalid_token :verify_duo, :invalid_token
@@ -53,8 +46,9 @@ class Devise::DeviseDuoController < DeviseController
   end
 
   def POST_enable_duo
-    resource.update_attribute(:duo_enabled, false)
+    resource.update_attribute(:duo_enabled, true)
     set_flash_message(:notice, :enabled)
+    redirect_to after_duo_enabled_path_for(resource)
   end
 
   # Disable 2FA
@@ -62,10 +56,6 @@ class Devise::DeviseDuoController < DeviseController
     resource.update_attribute(:duo_enabled, false)
     set_flash_message(:notice, :disabled)
     redirect_to root_path
-  end
-
-  def GET_verify_duo_installation
-    render :verify_duo_installation
   end
 
   private
