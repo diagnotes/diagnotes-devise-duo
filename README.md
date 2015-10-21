@@ -58,8 +58,7 @@ Change the default routes to point to something sane like:
 ```ruby
 devise_for :users, :path_names => {
 	:verify_duo => "/verify-token",
-	:enable_duo => "/enable-two-factor",
-	:verify_duo_installation => "/verify-installation"
+	:enable_duo => "/enable-two-factor"
 }
 ```
 
@@ -83,8 +82,6 @@ If you want to customise your views, you can modify the files that are located a
 
     app/views/devise/devise_duo/enable_duo.html.erb
     app/views/devise/devise_duo/verify_duo.html.erb
-    app/views/devise/devise_duo/verify_duo_installation.html.erb
-
 
 ## Custom Redirect Paths (eg. using modules)
 
