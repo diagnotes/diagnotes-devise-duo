@@ -44,7 +44,7 @@ class Devise::DeviseDuoController < DeviseController
 
   # enable 2fa
   def GET_enable_duo
-    if resource.duo_id.blank? || !resource.duo_enabled
+    if !resource.duo_enabled
       render :enable_duo
     else
       set_flash_message(:notice, :already_enabled)
