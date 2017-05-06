@@ -49,6 +49,7 @@ module DeviseDuo
 
           remember_me = (params.fetch(resource_name, {})[:remember_me].to_s == "1")
           return_to = session["#{resource_name}_return_to"]
+          password_expired = warden.session(resource_name)['password_expired']
           warden.logout
           warden.reset_session! # make sure the session resetted
 
@@ -57,6 +58,7 @@ module DeviseDuo
           session["#{resource_name}_password_checked"] = true
           session["#{resource_name}_remember_me"] = remember_me
           session["#{resource_name}_return_to"] = return_to if return_to
+          session["#{resource_name}_password_expired"] = password_expired
 
           redirect_to verify_duo_path_for(resource_name)
           return
